@@ -1,0 +1,59 @@
+version: '3.8'
+services:
+   postgresdb:
+     container_name: postgresdb-dojo-belt2
+     image: postgres:11.2-alpine 
+     volumes:
+       - db_vol:/var/lib/postgresql/data
+       - db_config_vol:/etc/postgresql
+       - ./sql_scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+     environment:
+       - POSTGRES_USER=${POSTGRES_USER}
+       - HOSTNAME=${HOSTNAME}
+       - POSTGRES_DB=${POSTGRES_DB}
+       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+       - PG_DB_PORT=${DB_PORT}  
+     ports:
+       - 5432:5432
+     networks:
+       api_private_network:
+         aliases: 
+           - database
+       web_public_network:
+         aliases: 
+           - app
+
+   api:
+    container_name: api-dojo-belt2
+    depends_on:
+      - postgresdb
+    build:
+      context: ./backend
+    environment:
+      - CONNECTION_STRING: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${HOSTNAME}:${DB_PORT}/${POSTGRES_DB}"
+    networks:
+      - api_private_network
+
+   web:
+    container_name: web-dojo-belt2
+    build: ./frontend       
+    depends_on:
+      - api
+    ports:
+      - 80:3000
+    environment:
+      - API_URL: "http://${HOSTNAME}:${WEB_PORT}"
+    networks:
+      - web_public_network
+
+volumes:
+    db_vol:
+    db_config_vol:
+    
+networks:
+   api_private_network:
+      name: backend_network
+      driver: bridge
+   web_public_network:
+      name: frontend_network
+      driver: bridge
