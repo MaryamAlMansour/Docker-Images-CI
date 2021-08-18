@@ -12,7 +12,7 @@ services:
        - HOSTNAME=${HOSTNAME}
        - POSTGRES_DB=${POSTGRES_DB}
        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-       - PG_DB_PORT=${DB_PORT}  
+       - DB_PORT=${DB_PORT}  
      ports:
        - 5432:5432
      networks:
@@ -30,7 +30,7 @@ services:
     build:
       context: ./backend
     environment:
-      CONNECTION_STRING: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${HOSTNAME}:${PG_DB_PORT}/${POSTGRES_DB}
+      CONNECTION_STRING: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${HOSTNAME}:${DB_PORT}/${POSTGRES_DB}
     networks:
       - api_private_network
 
