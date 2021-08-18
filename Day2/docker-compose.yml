@@ -32,6 +32,8 @@ services:
       context: ./backend
     environment:
       CONNECTION_STRING: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${HOSTNAME}:${DB_PORT}/${POSTGRES_DB}
+    ports:
+      - 3001:3001
     networks:
       - api_private_network
 
