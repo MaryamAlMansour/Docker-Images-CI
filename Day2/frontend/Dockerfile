@@ -1,3 +1,4 @@
+# choosing the base image
 FROM node:10-alpine
 
 # Create app directory
@@ -12,8 +13,8 @@ RUN npm install
 # bundle the app source
 COPY . .
 
-#exposing the web port
+#exposing the web port for container
 EXPOSE 3000
 
+# starting the app
 CMD ["node", "index.js"]
-
