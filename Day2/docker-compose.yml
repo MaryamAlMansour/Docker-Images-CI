@@ -31,19 +31,19 @@ services:
     build:
       context: ./backend
     environment:
-      CONNECTION_STRING: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${HOSTNAME}:${DB_PORT}/${POSTGRES_DB}
+      - CONNECTION_STRING: ${CONNECTION_STRING}
     networks:
       - api_private_network
 
    web:
     container_name: web-dojo-belt2
     build: ./frontend       
-    depends_on:
+    links:
       - api
     ports:
       - 80:3000
     environment:
-      API_URL: http://${HOSTNAME}:${WEB_PORT}
+      - API_URL: ${API_URL}
     networks:
       - web_public_network
 
