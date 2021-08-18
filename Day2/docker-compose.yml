@@ -30,7 +30,7 @@ services:
     build:
       context: ./backend
     environment:
-      - CONNECTION_STRING: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${HOSTNAME}:${DB_PORT}/${POSTGRES_DB}"
+      CONNECTION_STRING: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${HOSTNAME}:${PG_DB_PORT}/${POSTGRES_DB}
     networks:
       - api_private_network
 
@@ -42,7 +42,7 @@ services:
     ports:
       - 80:3000
     environment:
-      - API_URL: "http://${HOSTNAME}:${WEB_PORT}"
+      API_URL: http://${HOSTNAME}:${WEB_PORT}
     networks:
       - web_public_network
 
