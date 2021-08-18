@@ -1,7 +1,3 @@
-create user dojo_user;
-
-create database courses_db;
-
 grant all privileges on database courses_db to dojo_user;
 
 create table dojo_courses (
