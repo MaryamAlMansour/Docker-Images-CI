@@ -25,9 +25,9 @@ services:
   postgresdb:
     container_name: postgresdb-dojo-belt2
     environment:
-      - POSTGRES_USER=dojo_user
-      - POSTGRES_DB=courses_db
-      - POSTGRES_PASSWORD=post_belt2
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     image: "postgres:11.2-alpine"
     networks:
       - api_private_network
