@@ -1,5 +1,3 @@
-grant all privileges on database courses_db to dojo_user;
-
 create table dojo_courses (
 	course text,
 	description text
